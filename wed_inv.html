@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Alex & Princess · A Lifetime with Princess | 29 May 2026</title>
+  <!-- Google Fonts + Font Awesome 6 -->
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500;600&family=Parisienne&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --ivory: #FFFBF5;
+      --blush: #FCE4E4;
+      --dusty-rose: #D4A5A5;
+      --deep-rose: #B5838A;
+      --sage: #B5C0A3;
+      --charcoal: #2E2A28;
+      --gold: #D6B575;
+      --warm-gray: #7F6E6B;
+      --shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.1);
+      --border-light: rgba(181, 131, 138, 0.25);
+    }
+
+    body {
+      background: var(--ivory);
+      color: var(--charcoal);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 300;
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    /* custom scroll */
+    ::-webkit-scrollbar {
+      width: 5px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f0e7df;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--dusty-rose);
+      border-radius: 20px;
+    }
+
+    /* floating petals animation */
+    @keyframes floatPetals {
+      0% { transform: translateY(0) rotate(0deg); opacity: 0.8; }
+      100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+    }
+    .petal {
+      position: fixed;
+      bottom: -20px;
+      pointer-events: none;
+      z-index: 999;
+      font-size: 1.2rem;
+      animation: floatPetals linear forwards;
+    }
+
+    /* navigation */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(255, 251, 245, 0.94);
+      backdrop-filter: blur(16px);
+      z-index: 100;
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      padding: 0.9rem 2rem;
+      border-bottom: 1px solid var(--border-light);
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+    .navbar a {
+      color: var(--warm-gray);
+      text-decoration: none;
+      transition: 0.25s;
+      position: relative;
+    }
+    .navbar a:hover {
+      color: var(--deep-rose);
+    }
+    .navbar a::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      width: 0;
+      height: 1.5px;
+      background: var(--gold);
+      transition: 0.3s;
+    }
+    .navbar a:hover::after {
+      width: 100%;
+    }
+
+    /* hero section with blended background image */
+    .hero {
+      min-height: 100vh;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 8rem 2rem 5rem;
+    }
+    /* warm gradient overlay + image blending */
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255, 244, 235, 0.82) 0%, rgba(254, 233, 233, 0.78) 100%);
+      z-index: 0;
+    }
+    /* actual image blended: using your wed.jpg */
+    .hero-bg-image {
+      position: absolute;
+      inset: 0;
+      background-image: url('wed.jpg');
+      background-size: cover;
+      background-position: center 30%;
+      background-repeat: no-repeat;
+      opacity: 0.45;
+      mix-blend-mode: multiply;
+      z-index: 0;
+      filter: brightness(1.02) contrast(1.05);
+    }
+    .hero > * {
+      position: relative;
+      z-index: 2;
+    }
+    .hero-tag {
+      font-size: 0.7rem;
+      letter-spacing: 0.4em;
+      background: rgba(255,255,245,0.75);
+      backdrop-filter: blur(4px);
+      padding: 0.5rem 1.8rem;
+      border-radius: 60px;
+      color: var(--deep-rose);
+      border: 1px solid var(--border-light);
+      margin-bottom: 2rem;
+      animation: fadeUp 0.8s ease forwards;
+    }
+    .names {
+      font-family: 'Parisienne', cursive;
+      font-size: clamp(4rem, 12vw, 8rem);
+      color: var(--charcoal);
+      line-height: 1.1;
+      animation: fadeUp 1s 0.2s forwards;
+      opacity: 0;
+      transform: translateY(20px);
+      text-shadow: 0 2px 8px rgba(255,255,240,0.6);
+    }
+    .ampersand {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      color: var(--gold);
+      margin: 0.2rem 0;
+    }
+    .hero-date {
+      margin-top: 2rem;
+      display: inline-flex;
+      gap: 1.2rem;
+      background: rgba(255,255,250,0.8);
+      border-radius: 100px;
+      padding: 0.6rem 1.8rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      font-weight: 400;
+      backdrop-filter: blur(4px);
+      border: 1px solid var(--border-light);
+      animation: fadeUp 1s 0.4s forwards;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    .hashtag {
+      margin-top: 1.2rem;
+      font-family: 'Montserrat', monospace;
+      background: rgba(214, 181, 117, 0.2);
+      backdrop-filter: blur(4px);
+      padding: 0.4rem 1.2rem;
+      border-radius: 40px;
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      color: var(--deep-rose);
+      display: inline-block;
+      animation: fadeUp 1s 0.6s forwards;
+      opacity: 0;
+    }
+    .scroll-down {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      color: var(--deep-rose);
+      animation: bounce 2s infinite;
+      z-index: 2;
+    }
+
+    /* common */
+    .section {
+      padding: 6rem 1.5rem;
+    }
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .section-alt {
+      background: #FEF7F2;
+    }
+    .eyebrow {
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--deep-rose);
+      display: block;
+      text-align: center;
+      margin-bottom: 0.5rem;
+    }
+    .title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 6vw, 3.5rem);
+      font-weight: 500;
+      text-align: center;
+      color: var(--charcoal);
+    }
+    .divider {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.8rem;
+      margin: 1.5rem auto 2.5rem;
+    }
+    .divider-line {
+      width: 60px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), var(--dusty-rose), transparent);
+    }
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.8s cubic-bezier(0.2, 0.9, 0.3, 1.1), transform 0.8s ease;
+    }
+    .reveal.in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* countdown */
+    .countdown-grid {
+      display: flex;
+      justify-content: center;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+      margin-top: 2rem;
+    }
+    .countdown-card {
+      background: white;
+      border-radius: 32px;
+      padding: 1.2rem 1.6rem;
+      min-width: 95px;
+      text-align: center;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border-light);
+      transition: transform 0.2s;
+    }
+    .countdown-card:hover {
+      transform: translateY(-4px);
+    }
+    .countdown-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3rem;
+      font-weight: 600;
+      color: var(--deep-rose);
+    }
+    .countdown-label {
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--warm-gray);
+    }
+
+    /* story + details cards */
+    .story-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+    .story-text {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: var(--charcoal);
+    }
+    .story-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.7rem;
+      font-style: italic;
+      color: var(--deep-rose);
+      margin-bottom: 1rem;
+    }
+    /* CLICKABLE IMAGE AREA WITH HREF */
+    .story-visual {
+      background: radial-gradient(circle at 30% 30%, #FFEFE6, #FCE4E4);
+      border-radius: 58% 42% 62% 38% / 52% 48% 52% 48%;
+      min-height: 280px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Parisienne', cursive;
+      font-size: 3.5rem;
+      color: rgba(181, 131, 138, 0.6);
+      box-shadow: var(--shadow);
+      cursor: pointer;
+      transition: all 0.4s ease;
+      text-decoration: none;
+      position: relative;
+      overflow: hidden;
+    }
+    .story-visual:hover {
+      transform: scale(1.02);
+      filter: brightness(1.02);
+      box-shadow: 0 25px 40px -12px rgba(0, 0, 0, 0.2);
+    }
+    .story-visual:active {
+      transform: scale(0.99);
+    }
+    .click-hint {
+      position: absolute;
+      bottom: 20px;
+      background: rgba(255,255,240,0.7);
+      backdrop-filter: blur(8px);
+      padding: 0.2rem 1rem;
+      border-radius: 40px;
+      font-size: 0.6rem;
+      font-family: 'Montserrat', sans-serif;
+      letter-spacing: 0.1em;
+      color: var(--deep-rose);
+      pointer-events: none;
+    }
+
+    /* details cards */
+    .details-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.8rem;
+      margin-top: 1rem;
+    }
+    .detail-card {
+      background: white;
+      border-radius: 28px;
+      padding: 1.8rem 1rem;
+      text-align: center;
+      box-shadow: var(--shadow);
+      transition: all 0.3s;
+      border: 1px solid var(--border-light);
+    }
+    .detail-card i {
+      font-size: 2rem;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+    .detail-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      color: var(--deep-rose);
+      margin: 0.5rem 0;
+    }
+    .detail-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-weight: 600;
+    }
+    .map-link {
+      display: inline-block;
+      margin-top: 0.5rem;
+      background: var(--blush);
+      padding: 0.3rem 1rem;
+      border-radius: 50px;
+      font-size: 0.7rem;
+      text-decoration: none;
+      color: var(--deep-rose);
+      font-weight: 500;
+      transition: 0.2s;
+    }
+    .map-link:hover {
+      background: var(--gold);
+      color: white;
+    }
+
+    /* timeline */
+    .timeline {
+      max-width: 620px;
+      margin: 0 auto;
+    }
+    .timeline-item {
+      display: flex;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .timeline-icon {
+      width: 48px;
+      height: 48px;
+      background: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border-light);
+    }
+    .timeline-text {
+      flex: 1;
+    }
+    .timeline-time {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      color: var(--deep-rose);
+    }
+
+    /* RSVP */
+    .rsvp-card {
+      max-width: 580px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 48px;
+      padding: 2.5rem 2rem;
+      box-shadow: var(--shadow);
+    }
+    .form-group {
+      margin-bottom: 1.2rem;
+    }
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 1rem 1.2rem;
+      background: var(--ivory);
+      border: 1px solid var(--border-light);
+      border-radius: 60px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.85rem;
+      transition: 0.2s;
+    }
+    .form-group input:focus, .form-group select:focus {
+      outline: none;
+      border-color: var(--gold);
+      background: white;
+    }
+    .rsvp-btn {
+      width: 100%;
+      background: linear-gradient(95deg, var(--dusty-rose), var(--deep-rose));
+      border: none;
+      padding: 1rem;
+      border-radius: 60px;
+      color: white;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      font-size: 0.7rem;
+      cursor: pointer;
+      transition: 0.25s;
+    }
+    .rsvp-btn:hover {
+      opacity: 0.9;
+      transform: scale(0.98);
+    }
+    .rsvp-success {
+      display: none;
+      text-align: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      color: var(--deep-rose);
+      padding: 1rem;
+    }
+
+    footer {
+      background: #2E2A28;
+      color: #ddd;
+      text-align: center;
+      padding: 3rem 1rem;
+    }
+    footer a {
+      color: var(--gold);
+      text-decoration: none;
+    }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0);}
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); opacity: 0.6; }
+      50% { transform: translateX(-50%) translateY(8px); opacity: 1; }
+    }
+    @media (max-width: 700px) {
+      .story-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+      .navbar { gap: 1rem; font-size: 0.55rem; }
+      .story-visual { min-height: 220px; font-size: 2.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="navbar">
+  <a href="#home">Home</a>
+  <a href="#story">Story</a>
+  <a href="#details">Details</a>
+  <a href="#schedule">Schedule</a>
+  <a href="#rsvp">RSVP</a>
+</div>
+
+<section class="hero" id="home">
+  <div class="hero-bg-image"></div>
+  <span class="hero-tag">✨ Forever begins ✨</span>
+  <div class="names">
+    Alex <br>
+    <span class="ampersand">&amp;</span><br>
+    Princess
+  </div>
+  <div class="hero-date">
+    <i class="fas fa-calendar-alt"></i> 29 · 05 · 2026
+    <span style="width: 4px; height: 4px; background: var(--gold); border-radius: 50%; display: inline-block;"></span>
+    <i class="fas fa-map-marker-alt"></i> Tagaytay, Philippines
+  </div>
+  <div class="hashtag">
+    <i class="fas fa-hashtag"></i> #ALIfetimewithPrincess
+  </div>
+  <div class="scroll-down">
+    <span>Scroll to celebrate</span>
+    <i class="fas fa-chevron-down"></i>
+  </div>
+</section>
+
+<!-- Countdown -->
+<div class="section">
+  <div class="container">
+    <span class="eyebrow reveal">Counting moments</span>
+    <h2 class="title reveal">Until we say "I do"</h2>
+    <div class="divider reveal">
+      <div class="divider-line"></div>
+      <i class="fas fa-heart" style="color: var(--deep-rose); font-size: 0.9rem;"></i>
+      <div class="divider-line"></div>
+    </div>
+    <div class="countdown-grid reveal" id="countdownGrid">
+      <div class="countdown-card"><div class="countdown-number" id="days">00</div><div class="countdown-label">Days</div></div>
+      <div class="countdown-card"><div class="countdown-number" id="hours">00</div><div class="countdown-label">Hours</div></div>
+      <div class="countdown-card"><div class="countdown-number" id="minutes">00</div><div class="countdown-label">Minutes</div></div>
+      <div class="countdown-card"><div class="countdown-number" id="seconds">00</div><div class="countdown-label">Seconds</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- Story section with CLICKABLE image that has href -->
+<div class="section section-alt" id="story">
+  <div class="container">
+    <span class="eyebrow reveal">Our Journey</span>
+    <h2 class="title reveal">A Love like no other</h2>
+    <div class="divider reveal"><div class="divider-line"></div><i class="fas fa-feather-alt"></i><div class="divider-line"></div></div>
+    <div class="story-grid reveal">
+      <div class="story-text">
+        <div class="story-quote">“Two hearts, one beautiful forever.”</div>
+        <p>Alex & Princess met under the golden hour sky, and since that day, life has been a beautiful adventure. Their love grew with every sunset, every laugh, and every promise whispered. On May 29, 2026, surrounded by family and closest friends, they will celebrate the beginning of a lifetime — a lifetime where love always leads the way.</p>
+        <p style="margin-top: 1rem;">#ALIfetimewithPrincess isn't just a hashtag, it's their vow to fill every chapter with tenderness, respect, and endless romance.</p>
+      </div>
+      <!-- CLICKABLE IMAGE AREA: The "story-visual" now links to a wedding gallery or photo -->
+      <a href="https://photos.app.goo.gl/example-wedding-gallery" target="_blank" class="story-visual" style="text-decoration: none; display: flex; flex-direction: column;">
+        <span>A ✧ P</span>
+        <span class="click-hint"><i class="fas fa-camera"></i> Click to view our love gallery →</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- Details + Location with link -->
+<div class="section" id="details">
+  <div class="container">
+    <span class="eyebrow reveal">Celebration details</span>
+    <h2 class="title reveal">The Wedding</h2>
+    <div class="divider reveal"><div class="divider-line"></div><i class="fas fa-ring"></i><div class="divider-line"></div></div>
+    <div class="details-grid reveal">
+      <div class="detail-card"><i class="fas fa-calendar-week"></i><div class="detail-label">Date & Time</div><div class="detail-value">29 May 2026 · 3:30 PM</div><div>Ceremony starts at 4:00 PM</div></div>
+      <div class="detail-card"><i class="fas fa-location-dot"></i><div class="detail-label">Venue</div><div class="detail-value">The Viewpoint Estate</div><div>Tagaytay Ridge, Cavite</div>
+        <a href="https://maps.google.com/?q=Tagaytay+Ridge+Cavite+Philippines" target="_blank" class="map-link"><i class="fas fa-map-pin"></i> Open in Maps</a>
+      </div>
+      <div class="detail-card"><i class="fas fa-dress-code"></i><div class="detail-label">Dress code</div><div class="detail-value">Garden Formal</div><div>Pastels, florals & soft hues</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- Schedule timeline -->
+<div class="section section-alt" id="schedule">
+  <div class="container">
+    <span class="eyebrow reveal">Day of Timeline</span>
+    <h2 class="title reveal">Program</h2>
+    <div class="divider reveal"><div class="divider-line"></div><i class="fas fa-clock"></i><div class="divider-line"></div></div>
+    <div class="timeline reveal">
+      <div class="timeline-item"><div class="timeline-icon"><i class="fas fa-envelope-open-text"></i></div><div class="timeline-text"><div class="timeline-time">3:30 PM</div><strong>Guest arrival</strong><br>Welcome drinks & seating</div></div>
+      <div class="timeline-item"><div class="timeline-icon"><i class="fas fa-ring"></i></div><div class="timeline-text"><div class="timeline-time">4:00 PM</div><strong>Ceremony</strong><br>Vows, ring exchange & unity blessing</div></div>
+      <div class="timeline-item"><div class="timeline-icon"><i class="fas fa-champagne-glasses"></i></div><div class="timeline-text"><div class="timeline-time">5:00 PM</div><strong>Cocktail hour</strong><br>Garden lawn & live music</div></div>
+      <div class="timeline-item"><div class="timeline-icon"><i class="fas fa-utensils"></i></div><div class="timeline-text"><div class="timeline-time">6:30 PM</div><strong>Dinner & Toasts</strong><br>Family-style feast & speeches</div></div>
+      <div class="timeline-item"><div class="timeline-icon"><i class="fas fa-music"></i></div><div class="timeline-text"><div class="timeline-time">8:00 PM</div><strong>First dance & party</strong><br>Dancing under the stars</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- RSVP Section -->
+<div class="section" id="rsvp">
+  <div class="container">
+    <span class="eyebrow reveal">Kindly respond</span>
+    <h2 class="title reveal">Will you join us?</h2>
+    <div class="divider reveal"><div class="divider-line"></div><i class="fas fa-heart"></i><div class="divider-line"></div></div>
+    <div class="rsvp-card reveal">
+      <div id="rsvpForm">
+        <div class="form-group"><input type="text" id="guestName" placeholder="Your full name *"></div>
+        <div class="form-group"><input type="email" id="guestEmail" placeholder="Email address *"></div>
+        <div class="form-group"><select id="attending">
+          <option value="" disabled selected>Will you attend? *</option>
+          <option value="yes">🎉 Happily attending</option>
+          <option value="no">💔 Sadly decline</option>
+        </select></div>
+        <div class="form-group"><select id="plusOne">
+          <option value="1">Just me</option>
+          <option value="2">Myself + one guest</option>
+          <option value="3">Myself + 2 guests</option>
+        </select></div>
+        <div class="form-group"><input type="text" id="dietary" placeholder="Dietary needs / allergies (optional)"></div>
+        <button class="rsvp-btn" id="submitRSVP"><i class="fas fa-paper-plane"></i> Send RSVP</button>
+      </div>
+      <div id="rsvpSuccess" class="rsvp-success">
+        <i class="fas fa-check-circle" style="font-size: 2rem; color: var(--gold);"></i><br>
+        Thank you love! We can't wait to celebrate with you. ✨<br>
+        <span style="font-size: 0.8rem;">#ALIfetimewithPrincess</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p style="font-family: 'Parisienne', cursive; font-size: 1.8rem;">Alex & Princess</p>
+  <p>29 May 2026 · Tagaytay, Philippines</p>
+  <p style="margin-top: 0.8rem; font-size: 0.7rem;">#ALIfetimewithPrincess</p>
+  <p style="margin-top: 1rem; font-size: 0.65rem;">Made with infinite love <i class="fas fa-heart" style="color: var(--gold);"></i></p>
+</footer>
+
+<script>
+  // Countdown to May 29, 2026 (Manila time UTC+8)
+  function updateCountdown() {
+    const target = new Date('2026-05-29T16:00:00+08:00');
+    const now = new Date();
+    let diff = target - now;
+    if (diff < 0) diff = 0;
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (86400000)) / 3600000);
+    const minutes = Math.floor((diff % 3600000) / 60000);
+    const seconds = Math.floor((diff % 60000) / 1000);
+    document.getElementById('days').innerText = String(days).padStart(2, '0');
+    document.getElementById('hours').innerText = String(hours).padStart(2, '0');
+    document.getElementById('minutes').innerText = String(minutes).padStart(2, '0');
+    document.getElementById('seconds').innerText = String(seconds).padStart(2, '0');
+  }
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => { if(entry.isIntersecting) { entry.target.classList.add('in'); observer.unobserve(entry.target); } });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Floating petals (romantic touch)
+  function createPetal() {
+    const petal = document.createElement('div');
+    petal.classList.add('petal');
+    const flowers = ['🌸', '🌼', '🌺', '🌸', '🌷', '🌸', '🌹'];
+    petal.innerHTML = flowers[Math.floor(Math.random() * flowers.length)];
+    petal.style.left = Math.random() * 100 + '%';
+    petal.style.fontSize = 0.8 + Math.random() * 1.2 + 'rem';
+    petal.style.animationDuration = 5 + Math.random() * 7 + 's';
+    petal.style.opacity = 0.5 + Math.random() * 0.5;
+    document.body.appendChild(petal);
+    setTimeout(() => petal.remove(), 11000);
+  }
+  setInterval(createPetal, 1800);
+
+  // RSVP handler
+  const submitBtn = document.getElementById('submitRSVP');
+  const rsvpFormDiv = document.getElementById('rsvpForm');
+  const successDiv = document.getElementById('rsvpSuccess');
+
+  function handleRSVP() {
+    const name = document.getElementById('guestName').value.trim();
+    const email = document.getElementById('guestEmail').value.trim();
+    const attending = document.getElementById('attending').value;
+    if (!name || !email || !attending) {
+      alert("💌 Please fill in your name, email, and attendance status.");
+      return;
+    }
+    if (!email.includes('@')) {
+      alert("Please enter a valid email address.");
+      return;
+    }
+    rsvpFormDiv.style.display = 'none';
+    successDiv.style.display = 'block';
+    console.log(`💖 RSVP from ${name} (${email}) | Attending: ${attending} | #ALIfetimewithPrincess`);
+  }
+  submitBtn.addEventListener('click', handleRSVP);
+
+  // subtle hover animation for cards
+  const cards = document.querySelectorAll('.detail-card, .countdown-card');
+  cards.forEach(c => {
+    c.addEventListener('mouseenter', () => { c.style.transform = 'translateY(-5px)'; });
+    c.addEventListener('mouseleave', () => { c.style.transform = 'translateY(0)'; });
+  });
+</script>
+</body>
+</html>
